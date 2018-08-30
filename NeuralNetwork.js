@@ -1,3 +1,5 @@
+const Matrix = require("./matrix");
+
 function sigmoid(x) {
     return 1 / (1 + Math.exp(-x));
 }
@@ -87,7 +89,7 @@ class NeuralNetwork {
         this.weights_ho = Matrix.add(this.weights_ho, weight_ho_deltas);
 
         // Adjust the bias by its deltas (which is just the gradients)
-        this.bias_o = Matrix.add(this.bias_o,gradients);
+        this.bias_o = Matrix.add(this.bias_o, gradients);
 
 
         // DeltaW_IH = lr * Hidden_Error * dsigmoid * Input_Transpose
@@ -103,10 +105,36 @@ class NeuralNetwork {
 
         let inputs_T = Matrix.transpose(inputs);
         let wheight_IH_Delta = Matrix.multiply(hidden_gradient, inputs_T);
-        this.weights_ih = Matrix.add(this.weights_ih,wheight_IH_Delta);
+        this.weights_ih = Matrix.add(this.weights_ih, wheight_IH_Delta);
 
         // Adjust the bias by its deltas (which is just the gradients)
-        this.bias_h = Matrix.add(this.bias_h,hidden_gradient);
+        this.bias_h = Matrix.add(this.bias_h, hidden_gradient);
+
+    }
+
+    XOR(){
+        let dataset = {
+            inputs:
+                [[1, 1],
+                [1, 0],
+                [0, 1],
+                [0, 0]],
+            outputs:
+                [[0],
+                [1],
+                [1],
+                [0]]
+        }
         
+        let nn = new NeuralNetwork(2, 3, 1);
+        
+        for (let i = 0; i < 1000000; i++) {
+            let index = Math.floor(Math.random() * 4);
+            nn.train(dataset.inputs[index], dataset.outputs[index]);
+        }
+        
+        console.log("Training done");
+        console.log("Prediction for XOR [0,0]")
+        console.log(nn.predict([0, 0]));
     }
 }

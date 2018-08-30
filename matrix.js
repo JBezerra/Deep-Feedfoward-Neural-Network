@@ -152,3 +152,7 @@ class Matrix {
     }
 
 }
+
+if (typeof module !== 'undefined') {
+    module.exports = Matrix;
+}
