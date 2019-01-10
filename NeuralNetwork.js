@@ -30,11 +30,11 @@ class NeuralNetwork {
 
 
     predict(input_array) {
-        let inputs = Matrix.inputToMatrix(input_array);
+        let inputs = Matrix.fromArray(input_array);
         let hiddens = Matrix.multiply(this.weights_ih, inputs);
 
         // Add bias
-        hiddens = Matrix.add(hiddens, this.bias_h);
+        hiddens.add(this.bias_h);
 
         // Activation Function
         hiddens.map(sigmoid);
@@ -42,20 +42,20 @@ class NeuralNetwork {
         let outputs = Matrix.multiply(this.weights_ho, hiddens);
 
         // Add bias
-        outputs = Matrix.add(outputs, this.bias_o);
+        outputs.add(this.bias_o);
 
         // Activation Function
         outputs.map(sigmoid);
 
-        return Matrix.MatrixToArray(outputs);
+        return outputs.toArray();
     }
 
     train(input_array, target_array) {
-        let inputs = Matrix.inputToMatrix(input_array);
+        let inputs = Matrix.fromArray(input_array);
         let hiddens = Matrix.multiply(this.weights_ih, inputs);
 
         // Add bias
-        hiddens = Matrix.add(hiddens, this.bias_h);
+        hiddens.add(this.bias_h);
 
         // Activation Function
         hiddens.map(sigmoid);
@@ -63,14 +63,14 @@ class NeuralNetwork {
         let outputs = Matrix.multiply(this.weights_ho, hiddens);
 
         // Add bias
-        outputs = Matrix.add(outputs, this.bias_o);
+        outputs.add(this.bias_o);
 
         // Activation Function
         outputs.map(sigmoid);
 
         // ---------- Backpropagation -----------
 
-        let target = Matrix.inputToMatrix(target_array);
+        let target = Matrix.fromArray(target_array);
 
         // Calculate Error
         let output_error = Matrix.subtract(target, outputs);
@@ -79,36 +79,36 @@ class NeuralNetwork {
         // DeltaW_HO = lr * Output Error * dsigmoid * Hidden_Transpose
 
         let gradients = Matrix.map(outputs, dsigmoid); // Deriva Output Sigmoid
-        gradients = Matrix.multiply(gradients, output_error); // Multiplica pelo Erro
+        gradients.multiply(output_error); // Multiplica pelo Erro
         gradients.multiply(this.learning_rate); // Multiplica pelo Learning Rate
 
 
         // Calculate Deltas Weights Hidden to Output
         let hidden_T = Matrix.transpose(hiddens);
         let weight_ho_deltas = Matrix.multiply(gradients, hidden_T);
-        this.weights_ho = Matrix.add(this.weights_ho, weight_ho_deltas);
-
+        this.weights_ho.add(weight_ho_deltas);
+        
         // Adjust the bias by its deltas (which is just the gradients)
-        this.bias_o = Matrix.add(this.bias_o, gradients);
-
+        this.bias_o.add(gradients);
+        
 
         // DeltaW_IH = lr * Hidden_Error * dsigmoid * Input_Transpose
         let who_T = Matrix.transpose(this.weights_ho);
         let hidden_errors = Matrix.multiply(who_T, output_error);
-
+        
         // Calculate Hidden Gradient
         let hidden_gradient = Matrix.map(hiddens, dsigmoid);
-        hidden_gradient = Matrix.multiply(hidden_gradient, hidden_errors);
+        hidden_gradient.multiply(hidden_errors);
         hidden_gradient.multiply(this.learning_rate);
-
+        
         // Calculate Deltas Weights Input to Hidden
 
         let inputs_T = Matrix.transpose(inputs);
         let wheight_IH_Delta = Matrix.multiply(hidden_gradient, inputs_T);
-        this.weights_ih = Matrix.add(this.weights_ih, wheight_IH_Delta);
+        this.weights_ih.add(wheight_IH_Delta);
 
         // Adjust the bias by its deltas (which is just the gradients)
-        this.bias_h = Matrix.add(this.bias_h, hidden_gradient);
+        this.bias_h.add(hidden_gradient);
 
     }
 
