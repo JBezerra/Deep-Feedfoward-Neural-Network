@@ -1,4 +1,4 @@
-const Matrix = require("./matrix");
+//const Matrix = require("./matrix"); // using pure ES6
 
 function sigmoid(x) {
     return 1 / (1 + Math.exp(-x));

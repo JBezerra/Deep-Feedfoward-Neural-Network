@@ -21,7 +21,7 @@ class Matrix {
 
     randomize() {
         this.map(function (elm, i, j) {
-            return Math.floor(Math.random() * 10);;
+            return Math.floor(Math.random() * 2 - 1);;
         })
     }
 
