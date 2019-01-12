@@ -32,18 +32,18 @@ class NeuralNetwork {
     predict(input_array) {
         let inputs = Matrix.fromArray(input_array);
         let hiddens = Matrix.multiply(this.weights_ih, inputs);
-
+        
         // Add bias
         hiddens.add(this.bias_h);
 
         // Activation Function
         hiddens.map(sigmoid);
-
+        
         let outputs = Matrix.multiply(this.weights_ho, hiddens);
 
         // Add bias
         outputs.add(this.bias_o);
-
+        
         // Activation Function
         outputs.map(sigmoid);
 
@@ -59,7 +59,7 @@ class NeuralNetwork {
 
         // Activation Function
         hiddens.map(sigmoid);
-
+        
         let outputs = Matrix.multiply(this.weights_ho, hiddens);
 
         // Add bias
@@ -112,29 +112,28 @@ class NeuralNetwork {
 
     }
 
-    XOR(){
-        let dataset = {
-            inputs:
-                [[1, 1],
-                [1, 0],
-                [0, 1],
-                [0, 0]],
-            outputs:
-                [[0],
-                [1],
-                [1],
-                [0]]
-        }
-        
-        let nn = new NeuralNetwork(2, 3, 1);
-        
-        for (let i = 0; i < 1000000; i++) {
-            let index = Math.floor(Math.random() * 4);
-            nn.train(dataset.inputs[index], dataset.outputs[index]);
-        }
-        
-        console.log("Training done");
-        console.log("Prediction for XOR [0,0]")
-        console.log(nn.predict([0, 0]));
+    serialize(){
+        return JSON.stringify(this);
     }
+
+    loadModel(params){
+        this.input_nodes = params.input_nodes;
+        this.hidden_nodes = params.hidden_nodes;
+        this.output_nodes = params.output_nodes;
+
+        this.weights_ih = new Matrix(params.weights_ih.rows, params.weights_ih.cols);
+        this.weights_ih.data = params.weights_ih.data;
+
+        this.weights_ho = new Matrix(params.weights_ho.rows, params.weights_ho.cols);
+        this.weights_ho.data = params.weights_ho.data;
+
+        this.bias_h = new Matrix(params.bias_h.rows, params.bias_h.cols);
+        this.bias_h.data = params.bias_h.data;
+
+        this.bias_o = new Matrix(params.bias_o.rows, params.bias_o.cols);
+        this.bias_o.data = params.bias_o.data;
+
+        this.learning_rate = params.learning_rate;
+    }
+
 }
