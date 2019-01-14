@@ -3,18 +3,18 @@ This project is a simple neural network made in javascript as known as MLP(Multi
 
 ![DFF](https://image.ibb.co/hDt55K/dff.jpg)
 
-The matrix library was made by myself for the neural net too, and it can be used for any project.
-
 # How can I use?
+## MNIST Example:
+You can check a example of usage with MNIST Dataset to recognize handwritten human digits. 
 
 ## Create the Neural Network Object
-You have to provide the number of nodes of input, hidden and output. 
+You have to provide in order: Inputs, Hidden Layers, Output
 
 ```javascript
 var nn = new NeuralNetwork(2,4,1);
 ```
 ## Train your Neural Net
-You have to feed the NN with the inputs and the expected outputs
+Feed the training data with the expected label
 
 ```javascript
 nn.train([0,0],[0]);
@@ -31,7 +31,7 @@ nn.predict([0]);
 
 # How it works?
 Long story short, a neural network is a universal function aproximator.
-If you want understand better, I really recommend you some articles:
+If you would like to understand better, I really recommend you some articles:
 
 [Deep Learning Book - MLP](https://www.deeplearningbook.org/contents/mlp.html)
 
@@ -40,3 +40,9 @@ If you want understand better, I really recommend you some articles:
 And 3Blue1Brown video serie about neural networks:
 
 [But what is a Neural Network?](https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi)
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
