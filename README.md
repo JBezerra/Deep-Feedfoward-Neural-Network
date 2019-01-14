@@ -6,6 +6,7 @@ This project is a simple neural network made in javascript as known as MLP(Multi
 # How can I use?
 ## MNIST Example:
 You can check a example of usage with MNIST Dataset to recognize handwritten human digits. 
+![mnist](https://media.giphy.com/media/24FIhSCqGG1v7et28T/giphy.gif)
 
 ## Create the Neural Network Object
 You have to provide in order: Inputs, Hidden Layers, Output
